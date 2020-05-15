@@ -1,0 +1,5 @@
+Fonctionnalités en console testées.
+
+
+Problèmes restants :
+le premier coup ne garantit pas d'afficher plusieurs cases. 
