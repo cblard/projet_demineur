@@ -6,7 +6,6 @@ using namespace std;
 #define EXPERT 2
 #define TAILLEMAX 25
 #define MINESMAX 99
-#define MOVESIZE 526 // (25 * 25 - 99)
 
 int TAILLE ; // taille du plateau
 int MINES ; // nombre de mines du plateau
@@ -63,10 +62,8 @@ void afficherPlateau(char plateau[][TAILLEMAX])
 
 // Compteur de mines dans les cases adjacentes
 int compteurMinesAdjacentes(int ligne, int col, int mines[][2],
-                      char solution[][TAILLEMAX])
+int compteurMinesAdjacentes(int ligne, int col, char solution[][TAILLEMAX])
 {
-
-    int i;
     int compteur = 0;
 
     /* Compte les mines dans les 8 cases adjacentes
@@ -168,7 +165,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
     if (plateau[ligne][col] != '-')
         return (false);
 
-    int i, j;
+    int i;
 
     // Si la case choisie est une mine
     if (solution[ligne][col] == '*')
@@ -186,7 +183,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
     else
      {
         // Calcul du nombre de mines adjacentes + affichage de ce nombre
-        int compteur = compteurMinesAdjacentes(ligne, col, mines, solution);
+        int compteur = compteurMinesAdjacentes(ligne, col, solution);
         (*caseGauche)--;
 
         plateau[ligne][col] = compteur + '0';
@@ -381,7 +378,7 @@ void jouer ()
     char solution[TAILLEMAX][TAILLEMAX], plateau[TAILLEMAX][TAILLEMAX];
 
     int caseGauche = TAILLE * TAILLE - MINES, x, y;
-    int mines[MINESMAX][2]; // stores (x,y) coordinates of all mines.
+    int mines[MINESMAX][2]; // Stocke les coordonnées de toutes les mines
 
     initialise (solution, plateau);
 
