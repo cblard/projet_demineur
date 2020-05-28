@@ -111,7 +111,7 @@ int compteurMinesAdjacentes(int ligne, int col, int mines[][2],
                compteur++;
         }
 
-        // OUEST -------------
+        // OUEST ------------
 
         // Fonction effectuée seulement si la case est "valide"
         if (estValide (ligne, col-1) == true)
