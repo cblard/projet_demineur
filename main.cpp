@@ -61,7 +61,6 @@ void afficherPlateau(char plateau[][TAILLEMAX])
 }
 
 // Compteur de mines dans les cases adjacentes
-int compteurMinesAdjacentes(int ligne, int col, int mines[][2],
 int compteurMinesAdjacentes(int ligne, int col, char solution[][TAILLEMAX])
 {
     int compteur = 0;
@@ -158,7 +157,7 @@ int compteurMinesAdjacentes(int ligne, int col, char solution[][TAILLEMAX])
 
 // Fonction récursive de jeu
 bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
-            int mines[][2], int ligne, int col, int *caseGauche)
+            int mines[][2], int ligne, int col, int *nbMouvements)
 {
 
     // Si la case est déjà découverte
@@ -184,7 +183,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
      {
         // Calcul du nombre de mines adjacentes + affichage de ce nombre
         int compteur = compteurMinesAdjacentes(ligne, col, solution);
-        (*caseGauche)--;
+        (*nbMouvements)--;
 
         plateau[ligne][col] = compteur + '0';
 
@@ -211,7 +210,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne-1, col) == true)
             {
                    if (estUneMine (ligne-1, col, solution) == false)
-                   jouerUtil(plateau, solution, mines, ligne-1, col, caseGauche);
+                   jouerUtil(plateau, solution, mines, ligne-1, col, nbMouvements);
             }
 
             // SUD -------------
@@ -220,7 +219,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne+1, col) == true)
             {
                    if (estUneMine (ligne+1, col, solution) == false)
-                    jouerUtil(plateau, solution, mines, ligne+1, col, caseGauche);
+                    jouerUtil(plateau, solution, mines, ligne+1, col, nbMouvements);
             }
 
             // EST -------------
@@ -229,7 +228,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne, col+1) == true)
             {
                 if (estUneMine (ligne, col+1, solution) == false)
-                    jouerUtil(plateau, solution, mines, ligne, col+1, caseGauche);
+                    jouerUtil(plateau, solution, mines, ligne, col+1, nbMouvements);
             }
 
             // OUEST -----------
@@ -238,7 +237,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne, col-1) == true)
             {
                    if (estUneMine (ligne, col-1, solution) == false)
-                    jouerUtil(plateau, solution, mines, ligne, col-1, caseGauche);
+                    jouerUtil(plateau, solution, mines, ligne, col-1, nbMouvements);
             }
 
             // NORD-EST -------
@@ -247,7 +246,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne-1, col+1) == true)
             {
                 if (estUneMine (ligne-1, col+1, solution) == false)
-                    jouerUtil(plateau, solution, mines, ligne-1, col+1, caseGauche);
+                    jouerUtil(plateau, solution, mines, ligne-1, col+1, nbMouvements);
             }
 
             // NORD-OUEST -----
@@ -256,7 +255,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne-1, col-1) == true)
             {
                  if (estUneMine (ligne-1, col-1, solution) == false)
-                    jouerUtil(plateau, solution, mines, ligne-1, col-1, caseGauche);
+                    jouerUtil(plateau, solution, mines, ligne-1, col-1, nbMouvements);
             }
 
             // SUD-EST --------
@@ -265,7 +264,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne+1, col+1) == true)
             {
                  if (estUneMine (ligne+1, col+1, solution) == false)
-                    jouerUtil(plateau, solution, mines, ligne+1, col+1, caseGauche);
+                    jouerUtil(plateau, solution, mines, ligne+1, col+1, nbMouvements);
             }
 
             // SUD-OUEST ------
@@ -274,7 +273,7 @@ bool jouerUtil(char plateau[][TAILLEMAX], char solution[][TAILLEMAX],
             if (estValide (ligne+1, col-1) == true)
             {
                 if (estUneMine (ligne+1, col-1, solution) == false)
-                    jouerUtil(plateau, solution, mines, ligne+1, col-1, caseGauche);
+                    jouerUtil(plateau, solution, mines, ligne+1, col-1, nbMouvements);
             }
         }
 
@@ -377,7 +376,7 @@ void jouer ()
     // La solution et le plateau affiché à l'utilisateur
     char solution[TAILLEMAX][TAILLEMAX], plateau[TAILLEMAX][TAILLEMAX];
 
-    int caseGauche = TAILLE * TAILLE - MINES, x, y;
+    int nbMouvements = TAILLE * TAILLE - MINES, x, y;
     int mines[MINESMAX][2]; // Stocke les coordonnées de toutes les mines
 
     initialise (solution, plateau);
@@ -403,9 +402,9 @@ void jouer ()
         }
         nombreCoups ++;
 
-        gameOver = jouerUtil (plateau, solution, mines, x, y, &caseGauche);
+        gameOver = jouerUtil (plateau, solution, mines, x, y, &nbMouvements);
 
-        if ((gameOver == false) && (caseGauche == 0))
+        if ((gameOver == false) && (nbMouvements == 0))
          {
             printf ("\nVous avez gagné !!\n");
             gameOver = true;
