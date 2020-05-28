@@ -366,7 +366,7 @@ void replaceMine (int ligne, int col, char plateau[][TAILLEMAX])
     return;
 }
 
-// A Function to play Minesweeper game
+// Fonction de jeu
 void jouer ()
 {
     // Création d'une variable qui vérifie si le jeu n'est pas terminé
