@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "jeu.h"
+#include "jeufacile.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_facile_clicked()
 {
-    class jeu jeu;
-    jeu.exec();
+    this->close();
+    class jeuFacile jeuFac;
 }
+

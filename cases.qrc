@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/demineur">
+        <file>resources/caseDemineur.png</file>
+    </qresource>
+</RCC>

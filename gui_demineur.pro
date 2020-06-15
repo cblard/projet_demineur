@@ -27,18 +27,27 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    jeu.cpp
+    jeu.cpp \
+    jeufacile.cpp
 
 HEADERS += \
         mainwindow.h \
-    jeu.h
+    jeu.h \
+    jeufacile.h
 
 FORMS += \
         mainwindow.ui \
-    jeu.ui
+    jeu.ui \
+    jeufacile.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    resources/caseDemineur.png
+
+RESOURCES += \
+    cases.qrc
 
