@@ -388,32 +388,8 @@ void jouer ()
     // Place les mines aléatoirement
     placeMines (mines, solution);
 
-    /* Fonction pour afficher la solution
-    afficherSolution(solution);*/
+    afficherSolution(solution);
 
-    int nombreCoups = 0;
-    while (gameOver == false)
-     {
-        printf ("Plateau : \n");
-        afficherPlateau (plateau);
-        jouer (&x, &y);
-
-        // Pour garantir que le premier coup n'est pas une mine
-        if (nombreCoups == 0)
-        {
-            if (estUneMine (x, y, solution) == true)
-                replaceMine (x, y, solution);
-        }
-        nombreCoups ++;
-
-        gameOver = jouerUtil (plateau, solution, mines, x, y, &caseGauche);
-
-        if ((gameOver == false) && (caseGauche == 0))
-         {
-            printf ("\nVous avez gagné !!\n");
-            gameOver = true;
-         }
-    }
     return;
 }
 
@@ -464,7 +440,7 @@ int main()
     --> EXPERT = 24 * 24 et 99 minutes
     */
     choixNiveauDifficulte ();
-    jouer ();
+    jouer();
 
     return (0);
 }

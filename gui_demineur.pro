@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     jeu.cpp \
-    jeufacile.cpp
+    jeufacile.cpp \
+    clickablelabel.cpp
 
 HEADERS += \
         mainwindow.h \
     jeu.h \
-    jeufacile.h
+    jeufacile.h \
+    clickablelabel.h
 
 FORMS += \
         mainwindow.ui \
