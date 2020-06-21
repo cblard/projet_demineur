@@ -1,6 +1,17 @@
+#include "mainwindow.h"
+#include "jeumoyen.h"
+#include <QCoreApplication>
+#include <QtGui>
+#include <QGridLayout>
+#include <QApplication>
+#include <QWidget>
+#include <QLabel>
+#include <QLineEdit>
 #include<bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
+<<<<<<< Updated upstream
 #define DEBUTANT 0
 #define MOYEN 1
 #define EXPERT 2
@@ -465,6 +476,14 @@ int main()
     */
     choixNiveauDifficulte ();
     jouer ();
+=======
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    jeuMoyen jeuMoy;
+    MainWindow w;
+    w.show();
+>>>>>>> Stashed changes
 
-    return (0);
+    return a.exec();
 }
