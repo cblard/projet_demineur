@@ -33,7 +33,12 @@ SOURCES += \
     clickablelabel2.cpp \
     dialogmoyen.cpp \
     clickablelabel3.cpp \
-    jeudifficile.cpp
+    jeudifficile.cpp \
+    dialogdifficile.cpp \
+    jeuperso.cpp \
+    dialogfacile.cpp \
+    clickablelabel4.cpp \
+    dialogperso.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,14 +48,23 @@ HEADERS += \
     clickablelabel2.h \
     dialogmoyen.h \
     clickablelabel3.h \
-    jeudifficile.h
+    jeudifficile.h \
+    dialogdifficile.h \
+    jeuperso.h \
+    dialogfacile.h \
+    clickablelabel4.h \
+    dialogperso.h
 
 FORMS += \
         mainwindow.ui \
     jeufacile.ui \
     jeumoyen.ui \
     dialogmoyen.ui \
-    jeudifficile.ui
+    jeudifficile.ui \
+    dialogdifficile.ui \
+    jeuperso.ui \
+    dialogfacile.ui \
+    dialogperso.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

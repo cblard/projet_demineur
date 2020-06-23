@@ -1,5 +1,5 @@
-#ifndef ClickableLabel3_H
-#define ClickableLabel3_H
+#ifndef ClickableLabel4_H
+#define ClickableLabel4_H
 
 #include <QLabel>
 #include <QWidget>
@@ -7,7 +7,7 @@
 #include <vector>
 using namespace std;
 
-class ClickableLabel3 : public QLabel {
+class ClickableLabel4 : public QLabel {
     Q_OBJECT
 
 public:
@@ -15,9 +15,9 @@ public:
     int abs;
     bool checkFlag=false;
     vector<vector<char>> solution;
-    explicit ClickableLabel3(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
-    ClickableLabel3(int abs, int ord, vector<vector<char>> solution, QWidget* parent=Q_NULLPTR, Qt::WindowFlags f=Qt::WindowFlags()) ;
-    ~ClickableLabel3();
+    explicit ClickableLabel4(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
+    ClickableLabel4(int abs, int ord, vector<vector<char>> solution, QWidget* parent=Q_NULLPTR, Qt::WindowFlags f=Qt::WindowFlags()) ;
+    ~ClickableLabel4();
     void comparerCases();
     void creationGrille();
 

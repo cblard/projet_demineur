@@ -48,8 +48,6 @@ bool estUneMine2 (int ligne, int col, char plateau[][TAILLEMAX2])
 int compteurMinesAdjacentes2(int ligne, int col, int mines[][2],
 char solution[][TAILLEMAX2])
 {
-
-    int i;
     int compteur = 0;
 
     /* Compte les mines dans les 8 cases adjacentes
@@ -267,7 +265,6 @@ void jeuMoyen::abandon(){
 }
 
 jeuMoyen::jeuMoyen(bool check){
-    //creationGrille();
     windowSolution= new QWidget;
     windowSolution->setWindowTitle("Démineur");
     QGridLayout *layout = new QGridLayout;
@@ -306,23 +303,23 @@ void jeuMoyen::affichageGrille(int check){
     for(int i=0;i<16;i++){
         for(int j=0;j<16;j++){
             ClickableLabel2 *label = new ClickableLabel2(i,j,this->solution);
-            label->setPixmap(caseVide.scaled(44,44,Qt::KeepAspectRatio));
+            label->setPixmap(caseVide.scaled(39,39,Qt::KeepAspectRatio));
             layout->addWidget(label,i,j);
         }
     }
+    //boutonAbandon->setFixedSize(100,100);
+    //boutonAbandon->setText("Abandonner");
+    //QPushButton *bouton=new QPushButton("test");
+    //layout->addWidget(boutonAbandon,10,20);
     window->setLayout(layout);
     window->setFixedSize(700,700);
     if(check==1) window->show();
 }
 
 void jeuMoyen::creationGrille(){
-    bool gameOver = false;
-
     // Création des deux tableaux
     // La solution et le plateau affiché à l'utilisateur
     char solution[TAILLEMAX2][TAILLEMAX2], plateau[TAILLEMAX2][TAILLEMAX2];
-
-    int caseGauche = TAILLE2 * TAILLE2 - MINES2, x, y;
     int mines[MINESMAX][2]; // stores (x,y) coordinates of all mines.
 
     initialise2 (solution, plateau);
@@ -359,8 +356,7 @@ jeuMoyen& jeuMoyen::operator=(const jeuMoyen &jeuMoy){
     mines=jeuMoy.mines;
     window=jeuMoy.window;
     windowSolution=jeuMoy.windowSolution;
-    boutonAbandon=jeuMoy.boutonAbandon;
+    //boutonAbandon=jeuMoy.boutonAbandon;
     boutonAide=jeuMoy.boutonAide;
     abandonner=jeuMoy.abandonner;
 }
-

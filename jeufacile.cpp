@@ -21,8 +21,8 @@ using namespace std;
 #define MINESMAX 99
 #define MOVESIZE 526 // (25 * 25 - 99)
 
-int TAILLE=16 ; // taille du plateau
-int MINES=40 ; // nombre de mines du plateau
+int TAILLE=9 ; // taille du plateau
+int MINES=10 ; // nombre de mines du plateau
 
 // Fonction qui vérifie si la cellule en paramètre
 // est une case valide ou non
@@ -48,8 +48,6 @@ bool estUneMine (int ligne, int col, char plateau[][TAILLEMAX])
 int compteurMinesAdjacentes(int ligne, int col, int mines[][2],
 char solution[][TAILLEMAX])
 {
-
-    int i;
     int compteur = 0;
 
     /* Compte les mines dans les 8 cases adjacentes
@@ -234,8 +232,8 @@ void jeuFacile::abandon(){
     window->setWindowTitle("Démineur");
     QGridLayout *layout = new QGridLayout;
     QPixmap caseVide(":/demineur/resources/caseDemineur.png");
-    for(int i=0;i<16;i++){
-        for(int j=0;j<16;j++){
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
             ClickableLabel *label = new ClickableLabel(i,j,this->solution);
             switch(solution[i][j]){
             case '*':   label->setPixmap(bombe.scaled(39,39,Qt::KeepAspectRatio));
@@ -262,7 +260,7 @@ void jeuFacile::abandon(){
         }
     }
     window->setLayout(layout);
-    window->setFixedSize(700,700);
+    window->setFixedSize(500,500);
     window->show();
 }
 
@@ -316,13 +314,9 @@ void jeuFacile::affichageGrille(int check){
 }
 
 void jeuFacile::creationGrille(){
-    bool gameOver = false;
-
     // Création des deux tableaux
     // La solution et le plateau affiché à l'utilisateur
     char solution[TAILLEMAX][TAILLEMAX], plateau[TAILLEMAX][TAILLEMAX];
-
-    int caseGauche = TAILLE * TAILLE - MINES, x, y;
     int mines[MINESMAX][2]; // stores (x,y) coordinates of all mines.
 
     initialise (solution, plateau);

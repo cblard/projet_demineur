@@ -13,6 +13,7 @@ class ClickableLabel : public QLabel {
 public:
     int ord;
     int abs;
+    bool checkFlag=false;
     vector<vector<char>> solution;
     explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
     ClickableLabel(int abs, int ord, vector<vector<char>> solution, QWidget* parent=Q_NULLPTR, Qt::WindowFlags f=Qt::WindowFlags()) ;

@@ -26,11 +26,6 @@ dialogMoyen::~dialogMoyen()
     delete ui;
 }
 
-void dialogMoyen::on_abandon_clicked()
-{
-    jeuMoy.abandon();
-}
-
 void dialogMoyen::on_pushButton_clicked()
 {
     jeuMoy.abandon();

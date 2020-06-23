@@ -1,10 +1,13 @@
-#include "ClickableLabel.h"
+#include "clickablelabel.h"
 #include <QMessageBox>
+#include <QMouseEvent>
 
+// Constructeur
 ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent) {
 }
 
+// Constructeur + passage des coordonnées en paramètre
 ClickableLabel::ClickableLabel(int abs, int ord, vector<vector<char>> solution, QWidget* parent, Qt::WindowFlags f) : QLabel(parent){
     this->abs=abs;
     this->ord=ord;
@@ -13,11 +16,27 @@ ClickableLabel::ClickableLabel(int abs, int ord, vector<vector<char>> solution, 
 
 ClickableLabel::~ClickableLabel() {}
 
+
 void ClickableLabel::mousePressEvent(QMouseEvent* event){
-    comparerCases();
+    QPixmap flag(":/demineur/resources/flag.png");
+    QPixmap caseVide(":/demineur/resources/caseDemineur.png");
+    if(event->button()==Qt::RightButton){
+        if(checkFlag==false){
+            this->setPixmap(flag.scaled(50,50,Qt::KeepAspectRatio));
+            this->update();
+        }
+        if(checkFlag==true){
+            this->setPixmap(caseVide.scaled(50,50,Qt::KeepAspectRatio));
+            this->update();
+        }
+        checkFlag=!checkFlag;
+    }
+    if(event->button()==Qt::LeftButton) comparerCases();
 }
 
+// Fonction appelée pour récupérer la valeur de la case
 void ClickableLabel::comparerCases(){
+    QPixmap gameover(":/demineur/resources/gameover.png");
     QPixmap bombe(":/demineur/resources/bomb.png");
     QPixmap case0(":/demineur/resources/0.png");
     QPixmap case1(":/demineur/resources/1.png");
@@ -32,6 +51,7 @@ void ClickableLabel::comparerCases(){
         this->setPixmap(bombe.scaled(50,50,Qt::KeepAspectRatio));
         this->update();
         QMessageBox msgBox;
+        msgBox.setIconPixmap(gameover.scaled(50,50,Qt::KeepAspectRatio));
         msgBox.setText("      PERDU !");
         msgBox.setWindowTitle("Partie terminée");
         msgBox.setStyleSheet("QLabel{min-width: 100px;}");
@@ -74,4 +94,3 @@ void ClickableLabel::comparerCases(){
         this->update();
     }
 }
-

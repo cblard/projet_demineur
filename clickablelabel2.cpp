@@ -1,5 +1,7 @@
 #include "ClickableLabel2.h"
+#include <QMouseEvent>
 #include <QMessageBox>
+#include <QDebug>
 
 ClickableLabel2::ClickableLabel2(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent) {
@@ -14,10 +16,24 @@ ClickableLabel2::ClickableLabel2(int abs, int ord, vector<vector<char>> solution
 ClickableLabel2::~ClickableLabel2() {}
 
 void ClickableLabel2::mousePressEvent(QMouseEvent* event){
-    comparerCases();
+    QPixmap flag(":/demineur/resources/flag.png");
+    QPixmap caseVide(":/demineur/resources/caseDemineur.png");
+    if(event->button()==Qt::RightButton){
+        if(checkFlag==false){
+            this->setPixmap(flag.scaled(39,39,Qt::KeepAspectRatio));
+            this->update();
+        }
+        if(checkFlag==true){
+            this->setPixmap(caseVide.scaled(39,39,Qt::KeepAspectRatio));
+            this->update();
+        }
+        checkFlag=!checkFlag;
+    }
+    if(event->button()==Qt::LeftButton) comparerCases();
 }
 
 void ClickableLabel2::comparerCases(){
+    QPixmap gameover(":/demineur/resources/gameover.png");
     QPixmap bombe(":/demineur/resources/bomb.png");
     QPixmap case0(":/demineur/resources/0.png");
     QPixmap case1(":/demineur/resources/1.png");
@@ -29,49 +45,49 @@ void ClickableLabel2::comparerCases(){
     QPixmap case7(":/demineur/resources/7.png");
     QPixmap case8(":/demineur/resources/8.png");
     if(solution.at(abs).at(ord)=='*'){
-        this->setPixmap(bombe.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(bombe.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
         QMessageBox msgBox;
-        msgBox.setText("      PERDU !");
+        msgBox.setIconPixmap(gameover.scaled(50,50,Qt::KeepAspectRatio));
+        msgBox.setText(" PERDU !");
         msgBox.setWindowTitle("Partie terminée");
         msgBox.setStyleSheet("QLabel{min-width: 100px;}");
         msgBox.exec();
     }
     if(solution.at(abs).at(ord)==0){
-        this->setPixmap(case0.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case0.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==1){
-        this->setPixmap(case1.scaled(43,43,Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        this->setPixmap(case1.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==2){
-        this->setPixmap(case2.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case2.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==3){
-        this->setPixmap(case3.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case3.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==4){
-        this->setPixmap(case4.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case4.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==5){
-        this->setPixmap(case5.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case5.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==6){
-        this->setPixmap(case6.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case6.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==7){
-        this->setPixmap(case7.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case7.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
     if(solution.at(abs).at(ord)==8){
-        this->setPixmap(case8.scaled(43,43,Qt::KeepAspectRatio));
+        this->setPixmap(case8.scaled(39,39,Qt::KeepAspectRatio));
         this->update();
     }
 }
-

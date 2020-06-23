@@ -1,5 +1,5 @@
-#include "jeuDifficile.h"
-#include "ui_jeuDifficile.h"
+#include "jeuPerso.h"
+#include "ui_jeuPerso.h"
 #include <QtGui>
 #include <QLayout>
 #include <QPixmap>
@@ -12,31 +12,28 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QDialog>
-#include "clickablelabel3.h"
+#include "clickablelabel4.h"
 #include <bits/stdc++.h>
 #include <vector>
 using namespace std;
 
-#define TAILLEMAX2 25
+#define TAILLEMAX 25
 #define MINESMAX 99
 #define MOVESIZE 526 // (25 * 25 - 99)
 
-int TAILLE3=25 ; // taille du plateau
-int MINES3=99 ; // nombre de mines du plateau
-
 // Fonction qui vérifie si la cellule en paramètre
 // est une case valide ou non
-bool estValide3(int ligne, int col)
+bool estValide4(int ligne, int col, int taille)
 {
     // Retourne "true" si la ligne et la colonne
     // sont bien dans le plateau
-    return (ligne >= 0) && (ligne < TAILLE3) &&
-            (col >= 0) && (col < TAILLE3);
+    return (ligne >= 0) && (ligne < taille) &&
+            (col >= 0) && (col < taille);
 }
 
 // Fonction qui vérifie si la cellule en paramètre
 // est une bombe ou non
-bool estUneMine3 (int ligne, int col, char plateau[][TAILLEMAX2])
+bool estUneMine4 (int ligne, int col, char plateau[][TAILLEMAX])
 {
     if (plateau[ligne][col] == '*')
         return (true);
@@ -45,8 +42,8 @@ bool estUneMine3 (int ligne, int col, char plateau[][TAILLEMAX2])
 }
 
 // Compteur de mines dans les cases adjacentes
-int compteurMinesAdjacentes3(int ligne, int col, int mines[][2],
-char solution[][TAILLEMAX2])
+int compteurMinesAdjacentes4(int ligne, int col, int mines[][2],
+char solution[][TAILLEMAX], int taille)
 {
     int compteur = 0;
 
@@ -68,72 +65,72 @@ char solution[][TAILLEMAX2])
     // NORD --------------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne-1, col) == true)
+    if (estValide4 (ligne-1, col, taille) == true)
     {
-        if (estUneMine3 (ligne-1, col, solution) == true)
+        if (estUneMine4 (ligne-1, col, solution) == true)
             compteur++;
     }
 
     // SUD ---------------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne+1, col) == true)
+    if (estValide4 (ligne+1, col, taille) == true)
     {
-        if (estUneMine3 (ligne+1, col, solution) == true)
+        if (estUneMine4 (ligne+1, col, solution) == true)
             compteur++;
     }
 
     // EST ---------------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne, col+1) == true)
+    if (estValide4 (ligne, col+1, taille) == true)
     {
-        if (estUneMine3 (ligne, col+1, solution) == true)
+        if (estUneMine4 (ligne, col+1, solution) == true)
             compteur++;
     }
 
     // OUEST ------------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne, col-1) == true)
+    if (estValide4 (ligne, col-1, taille) == true)
     {
-        if (estUneMine3 (ligne, col-1, solution) == true)
+        if (estUneMine4 (ligne, col-1, solution) == true)
             compteur++;
     }
 
     // NORD-EST ---------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne-1, col+1) == true)
+    if (estValide4 (ligne-1, col+1, taille) == true)
     {
-        if (estUneMine3 (ligne-1, col+1, solution) == true)
+        if (estUneMine4 (ligne-1, col+1, solution) == true)
             compteur++;
     }
 
     // NORD-OUEST ------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne-1, col-1) == true)
+    if (estValide4 (ligne-1, col-1, taille) == true)
     {
-        if (estUneMine3 (ligne-1, col-1, solution) == true)
+        if (estUneMine4 (ligne-1, col-1, solution) == true)
             compteur++;
     }
 
     // SUD-EST ---------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne+1, col+1) == true)
+    if (estValide4 (ligne+1, col+1, taille) == true)
     {
-        if (estUneMine3 (ligne+1, col+1, solution) == true)
+        if (estUneMine4 (ligne+1, col+1, solution) == true)
             compteur++;
     }
 
     // SUD-OUEST ------
 
     // Fonction effectuée seulement si la case est "valide"
-    if (estValide3 (ligne+1, col-1) == true)
+    if (estValide4 (ligne+1, col-1, taille) == true)
     {
-        if (estUneMine3 (ligne+1, col-1, solution) == true)
+        if (estUneMine4 (ligne+1, col-1, solution) == true)
             compteur++;
     }
 
@@ -142,9 +139,9 @@ char solution[][TAILLEMAX2])
 
 // Fonction qui place les mines aléatoirement
 // au début du jeu
-void placeMines3(int mines[][2], char solution[][TAILLEMAX2])
+void placeMines4(int mines[][2], char solution[][TAILLEMAX], int taille, int nbMines)
 {
-    bool mark[TAILLEMAX2*TAILLEMAX2];
+    bool mark[TAILLEMAX*TAILLEMAX];
 
     memset (mark, false, sizeof (mark));
     // memset : Convertit le deuxième paramètre en unsigned char
@@ -153,11 +150,11 @@ void placeMines3(int mines[][2], char solution[][TAILLEMAX2])
 
 
     // Boucle tant que toutes les mines n'ont pas été créées
-    for (int i=0; i<MINES3; )
+    for (int i=0; i<nbMines; )
     {
-        int random = rand() % (TAILLE3*TAILLE3);
-        int x = random / TAILLE3;
-        int y = random % TAILLE3;
+        int random = rand() % (taille*taille);
+        int x = random / taille;
+        int y = random % taille;
 
         // Ajoute une mine dans cette case
         // Si elle n'est pas déjà occupée par une mine
@@ -179,17 +176,17 @@ void placeMines3(int mines[][2], char solution[][TAILLEMAX2])
     return;
 }
 
-// Fonction qui initialise le plateau de l'utilisateur
-void initialise3(char solution[][TAILLEMAX2], char plateau[][TAILLEMAX2])
+// Fonction qui initialise2 le plateau de l'utilisateur
+void initialise4(char solution[][TAILLEMAX], char plateau[][TAILLEMAX], int taille)
 {
-    // initialise un nombre aléatoire
+    // initialise2 un nombre aléatoire
     // Pour que les grilles ne se ressemblent pas
     srand(time (NULL));
 
     // Toutes les cases sont vidées et affichées -
-    for (int i=0; i<TAILLE3; i++)
+    for (int i=0; i<taille; i++)
     {
-        for (int j=0; j<TAILLE3; j++)
+        for (int j=0; j<taille; j++)
         {
             plateau[i][j] = solution[i][j] = '-';
         }
@@ -200,11 +197,11 @@ void initialise3(char solution[][TAILLEMAX2], char plateau[][TAILLEMAX2])
 
 // Fonction qui va replacer une mine pour que le premier coup
 // de l'utilisateur ne soit pas une mine
-void replaceMine3 (int ligne, int col, char plateau[][TAILLEMAX2])
+void replaceMine4 (int ligne, int col, char plateau[][TAILLEMAX], int taille)
 {
-    for (int i=0; i<TAILLE3; i++)
+    for (int i=0; i<taille; i++)
     {
-        for (int j=0; j<TAILLE3; j++)
+        for (int j=0; j<taille; j++)
         {
             if (plateau[i][j] != '*')
             {
@@ -217,7 +214,7 @@ void replaceMine3 (int ligne, int col, char plateau[][TAILLEMAX2])
     return;
 }
 
-void jeuDifficile::abandon(){
+void jeuPerso::abandon(){
     QPixmap bombe(":/demineur/resources/bomb.png");
     QPixmap case0(":/demineur/resources/0.png");
     QPixmap case1(":/demineur/resources/1.png");
@@ -232,9 +229,9 @@ void jeuDifficile::abandon(){
     window->setWindowTitle("Démineur");
     QGridLayout *layout = new QGridLayout;
     QPixmap caseVide(":/demineur/resources/caseDemineur.png");
-    for(int i=0;i<24;i++){
-        for(int j=0;j<24;j++){
-            ClickableLabel3 *label = new ClickableLabel3(i,j,this->solution);
+    for(int i=0;i<taille;i++){
+        for(int j=0;j<taille;j++){
+            ClickableLabel4 *label = new ClickableLabel4(i,j,this->solution);
             switch(solution[i][j]){
             case '*':   label->setPixmap(bombe.scaled(25,25,Qt::KeepAspectRatio));
                 layout->addWidget(label,i,j); break;
@@ -260,95 +257,102 @@ void jeuDifficile::abandon(){
         }
     }
     window->setLayout(layout);
-    window->setFixedSize(700,700);
+    window->setFixedSize(tailleFenetre,tailleFenetre);
     window->show();
 }
 
-jeuDifficile::jeuDifficile(bool check){
+jeuPerso::jeuPerso(): ui(new Ui::jeuPerso){
+
+}
+
+jeuPerso::jeuPerso(bool check){
     //creationGrille();
     windowSolution= new QWidget;
     windowSolution->setWindowTitle("Démineur");
     QGridLayout *layout = new QGridLayout;
     QPixmap caseVide(":/demineur/resources/caseDemineur.png");
-    for(int i=0;i<24;i++){
-        for(int j=0;j<24;j++){
-            ClickableLabel3 *label = new ClickableLabel3(i,j,this->solution);
+    for(int i=0;i<taille;i++){
+        for(int j=0;j<taille;j++){
+            ClickableLabel4 *label = new ClickableLabel4(i,j,this->solution);
             label->setPixmap(caseVide.scaled(25,25,Qt::KeepAspectRatio));
             layout->addWidget(label,i,j);
         }
     }
     windowSolution->setLayout(layout);
-    windowSolution->setFixedSize(700,700);
+    windowSolution->setFixedSize(tailleFenetre,tailleFenetre);
     window->close();
     windowSolution->show();
 }
 
-jeuDifficile::jeuDifficile(): ui(new Ui::jeuDifficile)
+jeuPerso::jeuPerso(int taille, int nbMines): ui(new Ui::jeuPerso)
 {
+    this->taille=taille;
+    this->nbMines=nbMines;
+    this->tailleFenetre=taille*28;
     creationGrille();
 }
 
-jeuDifficile::~jeuDifficile()
+jeuPerso::~jeuPerso()
 {
     delete ui;
 }
 
-vector<vector<char>> jeuDifficile::getSolution(){
+vector<vector<char>> jeuPerso::getSolution(){
     return solution;
 }
 
-void jeuDifficile::affichageGrille(int check){
+void jeuPerso::affichageGrille(int check){
     window->setWindowTitle("Démineur");
     QGridLayout *layout = new QGridLayout;
     QPixmap caseVide(":/demineur/resources/caseDemineur.png");
-    for(int i=0;i<24;i++){
-        for(int j=0;j<24;j++){
-            ClickableLabel3 *label = new ClickableLabel3(i,j,this->solution);
+    for(int i=0;i<taille;i++){
+        for(int j=0;j<taille;j++){
+            ClickableLabel4 *label = new ClickableLabel4(i,j,this->solution);
             label->setPixmap(caseVide.scaled(25,25,Qt::KeepAspectRatio));
             layout->addWidget(label,i,j);
         }
     }
     window->setLayout(layout);
-    window->setFixedSize(700,700);
+    window->setFixedSize(tailleFenetre, tailleFenetre);
     if(check==1) window->show();
 }
 
-void jeuDifficile::creationGrille(){
+void jeuPerso::creationGrille(){
     // Création des deux tableaux
     // La solution et le plateau affiché à l'utilisateur
-    char solution[TAILLEMAX2][TAILLEMAX2], plateau[TAILLEMAX2][TAILLEMAX2];
+    char solution[TAILLEMAX][TAILLEMAX], plateau[TAILLEMAX][TAILLEMAX];
     int mines[MINESMAX][2]; // stores (x,y) coordinates of all mines.
 
-    initialise3 (solution, plateau);
+    initialise4 (solution, plateau, taille);
 
     // Place les mines aléatoirement
-    placeMines3 (mines, solution);
+    placeMines4 (mines, solution, taille, nbMines);
 
-    vector<vector<int>> mines3(99, vector<int>(2,0));
+    vector<vector<int>> MINES(99, vector<int>(2,0));
     for(int i=0;i<99;i++){
         for(int j=0;j<2;j++){
-            mines3.at(i).at(j)=mines[i][j];
+            MINES.at(i).at(j)=mines[i][j];
         }
     }
 
-    vector<vector<char>> sol(99, vector<char>(99,0));
-    for(int i=0;i<99;i++){
-        for(int j=0;j<99;j++){
+    vector<vector<char>> sol(nbMines, vector<char>(nbMines,0));
+    for(int i=0;i<nbMines;i++){
+        for(int j=0;j<nbMines;j++){
             sol.at(i).at(j)=solution[i][j];
         }
     }
-    for(int i=0;i<24;i++){
-        for(int j=0;j<24;j++){
+    for(int i=0;i<taille;i++){
+        for(int j=0;j<taille;j++){
             if(sol.at(i).at(j)!='*'){
-                sol.at(i).at(j)=(char)compteurMinesAdjacentes3(i,j,mines,solution);
+                sol.at(i).at(j)=(char)compteurMinesAdjacentes4(i,j,mines,solution,taille);
             }
         }
     }
     this->solution=sol;
-    this->mines=mines3;
+    this->mines=MINES;
 }
 
-jeuDifficile& jeuDifficile::operator=(const jeuDifficile &jeuMoy){
+jeuPerso& jeuPerso::operator=(const jeuPerso &jeuMoy){
     solution=jeuMoy.solution;
     mines=jeuMoy.mines;
     window=jeuMoy.window;

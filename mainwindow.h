@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "jeu.h"
 #include "jeumoyen.h"
 
 namespace Ui {
@@ -25,9 +24,10 @@ private slots:
 
     void on_difficile_clicked();
 
+    void on_perso_clicked();
+
 private:
     Ui::MainWindow *ui;
-    jeu *jeu;
 };
 
 #endif // MAINWINDOW_H
